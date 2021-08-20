@@ -1,0 +1,113 @@
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS contacts;
+
+CREATE TABLE customers(
+   customer_id INT GENERATED ALWAYS AS IDENTITY,
+   customer_name VARCHAR(255) NOT NULL,
+   PRIMARY KEY(customer_id)
+);
+INSERT INTO Customer(cust_name) values 
+('panneer'),
+('rani');
+
+CREATE TABLE contacts(
+   contact_id INT GENERATED ALWAYS AS IDENTITY,
+   customer_name VARCHAR(255) NOT NULL,
+   customer_id INT,
+   phone VARCHAR(15),
+   email VARCHAR(100),
+   PRIMARY KEY(contact_id),
+   CONSTRAINT fk_customer
+      FOREIGN KEY(customer_id) 
+	  REFERENCES customers(customer_id)
+	
+);
+
+insert into contacts (customer_name,customer_id,phone,email) values
+
+('selvam',9,9940996189,'pannb8@123'),
+('esha',11,8248716896,'esha@123')
+
+select * from customer;
+select * from contacts;
+alter table customers rename to  customer
+alter table customer drop column customer_name
+alter table contacts add email char(30)
+alter table customers rename customer_name to cust_name
+alter table customer alter column cust_name type varchar(30)
+
+update customer set cust_name='BALA' where customer_id=2
+delete from  customer where customer_id=8
+
+select c.cust_name,c1.customer_id from customer as c inner join  contacts as c1 on  c.customer_id=c1.customer_id
+select c.cust_name,c1.customer_id from customer as c left outer join  contacts as c1 on  c.customer_id=c1.customer_id
+select c.cust_name,c1.customer_id from customer as c right outer join  contacts as c1 on  c.customer_id=c1.customer_id
+select c.cust_name,c1.customer_id from customer as c full outer join  contacts as c1 on  c.customer_id=c1.customer_id
+
+select customer_id from customer union select customer_id from contacts
+select customer_id from customer union all select customer_id from contacts
+
+update  contacts set  phone='6374516162' where contact_id=5
+update  customer set  cust_name='vasu' where customer_id=3
+
+select * from contacts limit 4 offset 2
+select * from contacts limit 3
+select * from contacts order by contact_id asc
+select * from contacts order by customer_id desc
+select customer_id, customer_name from contacts group by customer_id,customer_name
+select * from contacts where contact_id >=6
+select min(contact_id) from contacts
+select max(contact_id) from contacts
+select sum(contact_id) from contacts
+select avg(customer_id) from contacts
+select * from contacts where phone in ('9940996189')
+select * from contacts where customer_name like ('vasu')
+select distinct email from contacts 
+select * from contacts where customer_id between 3 and 5
+select * from contacts where customer_id=3 or customer_id=5
+select * from contacts where customer_id is null
+select * from contacts as ct where exists (select * from customer as c where ct.customer_id=c.customer_id)
+select * from contacts as ct where not exists (select * from customer as c where c.cust_name=ct.customer_name)
+select now()
+select power(2,3)
+select justify_days(interval '35 days')
+select make_date(2013, 7, 15)
+select localtime
+select localtimestamp
+select * from contacts  intersect select * from customer 
+
+
+create table cus(
+	cus_name char(10) not null,
+	cust_id char(10) null,
+	unique(cus_name)
+);
+insert into cus values 
+('bala','13'),
+('ganesh','11')
+select * from cus
+drop table cus
+truncate table cus
+
+create user bala 
+drop user bala
+CREATE USER bala  WITH PASSWORD 'fantastic' VALID UNTIL 'aug 31, 2021';
+ALTER USER bala WITH PASSWORD 'fantast';
+create view v1 as select * from contacts where customer_id between 3 and 5
+select * from v1
+grant select,update on contacts to bala
+grant all on contacts to bala
+revoke all on contacts from bala
+
+
+
+
+
+
+
+
+
+
+
+select customer_id from customer union all select customer_id from contacts
+
